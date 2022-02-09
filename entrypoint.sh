@@ -54,7 +54,7 @@ NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
 
 #only tag if commit message have version-bump-message as mentioned above
 if [ -z "$NEEDS_TAG" ]; then
-    if [ $COUNT_OF_COMMIT_MSG_HAVE_SEMVER_MAJOR -gt 0 ] ||  [ $COUNT_OF_COMMIT_MSG_HAVE_SEMVER_MINOR -gt 0 ] || [ $COUNT_OF_COMMIT_MSG_HAVE_SEMVER_PATCH -gt 0 ]; then
+    if [ $COUNT_OF_COMMIT_MSG_HAVE_SEMVER_MAJOR -gt 0 ] ||  [ $COUNT_OF_COMMIT_MSG_HAVE_SEMVER_MINOR -gt 0 ]; then
         echo "Tagged with $NEW_TAG (Ignoring fatal:cannot describe - this means commit is untagged) "
         git tag "$NEW_TAG"
         git push origin $NEW_TAG -f
