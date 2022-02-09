@@ -25,16 +25,20 @@ VNUM3=${VERSION_BITS[2]}
 
 COUNT_OF_COMMIT_MSG_HAVE_SEMVER_MAJOR=`git log -1 --pretty=%B | egrep -ci '^(breaking)|(major)'`
 COUNT_OF_COMMIT_MSG_HAVE_SEMVER_MINOR=`git log -1 --pretty=%B | egrep -ci '^(feature)|minor)'`
+TO_PUSH=false
 
 if [ $COUNT_OF_COMMIT_MSG_HAVE_SEMVER_MAJOR -gt 0 ]; then
     VNUM1=$((VNUM1+1))
     VNUM2=0
     VNUM3=0
+    TO_PUSH=true
 elif [ $COUNT_OF_COMMIT_MSG_HAVE_SEMVER_MINOR -gt 0 ]; then
     VNUM2=$((VNUM2+1)) 
     VNUM3=0
+    TO_PUSH=true
 else
     VNUM3=$((VNUM3+1)) 
+    TO_PUSH=true
 fi
 
 # count all commits for a branch
@@ -54,7 +58,7 @@ NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
 
 #only tag if commit message have version-bump-message as mentioned above
 if [ -z "$NEEDS_TAG" ]; then
-    if [ $COUNT_OF_COMMIT_MSG_HAVE_SEMVER_MAJOR -gt 0 ] ||  [ $COUNT_OF_COMMIT_MSG_HAVE_SEMVER_MINOR -gt 0 ]; then
+    if [ $TO_PUSH ]; then
         echo "Tagged with $NEW_TAG (Ignoring fatal:cannot describe - this means commit is untagged) "
         git tag "$NEW_TAG"
         # git push origin $NEW_TAG -f
