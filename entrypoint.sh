@@ -24,7 +24,7 @@ VNUM2=${VERSION_BITS[1]}
 VNUM3=${VERSION_BITS[2]}
 
 COUNT_OF_COMMIT_MSG_HAVE_SEMVER_MAJOR=`git log -1 --pretty=%B | egrep -ci '^(breaking)|(major)'`
-COUNT_OF_COMMIT_MSG_HAVE_SEMVER_MINOR=`git log -1 --pretty=%B | egrep -ci '^(feature)|minor)'`
+COUNT_OF_COMMIT_MSG_HAVE_SEMVER_MINOR=`git log -1 --pretty=%B | egrep -ci '^(feature)|(minor)'`
 TO_PUSH=false
 
 if [ $COUNT_OF_COMMIT_MSG_HAVE_SEMVER_MAJOR -gt 0 ]; then
@@ -40,11 +40,6 @@ else
     VNUM3=$((VNUM3+1)) 
     TO_PUSH=true
 fi
-
-# count all commits for a branch
-GIT_COMMIT_COUNT=`git rev-list --count HEAD`
-echo "Commit count: $GIT_COMMIT_COUNT" 
-export BUILD_NUMBER=$GIT_COMMIT_COUNT
 
 #create new tag
 NEW_TAG="$VNUM1.$VNUM2.$VNUM3"
@@ -62,7 +57,7 @@ if [ -z "$NEEDS_TAG" ]; then
         echo "Tagged with $NEW_TAG (Ignoring fatal:cannot describe - this means commit is untagged) "
         git tag "$NEW_TAG"
         # git push origin $NEW_TAG -f
-        git push --tags -f
+        git push $NEW_TAG
         echo "Success"
     else
         echo "Failed"
