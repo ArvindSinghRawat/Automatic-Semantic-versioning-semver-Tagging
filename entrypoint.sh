@@ -63,6 +63,9 @@ if [ -z "$NEEDS_TAG" ]; then
         git tag "$NEW_TAG"
         # git push origin $NEW_TAG -f
         git push --tags -f
+        echo "Success"
+    else
+        echo "Failed"
     fi
 else
     echo "Already a tag on this commit"
