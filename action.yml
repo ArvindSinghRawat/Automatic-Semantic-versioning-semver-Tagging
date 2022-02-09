@@ -1,0 +1,19 @@
+# action.yml
+name: 'Git Automatic Semver Tagging'
+description: 'Automatic creates tags based on Semver'
+author: 'ArvindSinghRawat'
+branding:
+  icon: 'git-merge'  
+  color: 'purple'
+inputs:
+  github_token:  # id of input
+    description: 'Github token to get repo access'
+    required: true
+outputs:
+  NEW_TAG: # id of output
+    description: 'Newly Created Tag'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.who-to-greet }}
