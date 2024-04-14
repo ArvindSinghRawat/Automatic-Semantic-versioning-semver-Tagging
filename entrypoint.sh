@@ -57,7 +57,7 @@ function update_version {
 function to_number {
     # Checks if provided parameter is a number or not. If not, then defaults to Zero.
     echo "Provided value is $1"
-    local $VALUE=$1
+    local VALUE=$1
     if [[ $VALUE =~ ^[0-9]+$ ]];
     then
         return $VALUE
