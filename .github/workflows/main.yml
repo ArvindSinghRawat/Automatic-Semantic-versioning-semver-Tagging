@@ -10,8 +10,8 @@ on:
 
   workflow_dispatch:
 
-  permissions:
-    contents: write
+permissions:
+  contents: write
 
 jobs:
   auto-tag:
