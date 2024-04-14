@@ -9,7 +9,7 @@ function get_current_version {
     then
         VERSION='0.0.0'
     fi
-    echo "$VERSION"
+    return $VERSION
 }
 
 # Function to update the version based on commit message
@@ -23,9 +23,12 @@ function update_version {
         NEXT_VERSION='0.0.1'
     else
         local VERSION_PARTS=(${CURRENT_VERSION//./ })
-        V_MAJOR=$(to_number ${VERSION_PARTS[0]})
-        V_MINOR=$(to_number ${VERSION_PARTS[1]})
-        V_PATCH=$(to_number ${VERSION_PARTS[2]})
+        to_number ${VERSION_PARTS[0]}
+        V_MAJOR=$?
+        to_number ${VERSION_PARTS[1]}
+        V_MINOR=$?
+        to_number ${VERSION_PARTS[2]}
+        V_PATCH=$?
 
         local IS_MAJOR_CHANGE=`git log -1 --pretty=%B | egrep -ci '^(breaking)|(release)|(major)'`
         local IS_MINOR_CHANGE=`git log -1 --pretty=%B | egrep -ci '^(feature)|(minor)'`
@@ -57,9 +60,9 @@ function to_number {
     local $VALUE=$1
     if [[ $VALUE =~ ^[0-9]+$ ]];
     then
-        echo $VALUE
+        return $VALUE
     else
-        echo 0
+        return 0
     fi
 }
 
@@ -78,7 +81,8 @@ NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
 if [ -z "$NEEDS_TAG" ]; then
     # Get the latest tag across all branches, not just the current branch
     # Ignore in case of error, generally happens if no tag is present
-    VERSION=$(get_current_version)
+    get_current_version
+    VERSION=$?
     echo "Current Version: $VERSION"
 
     # Create a new version from the existing tag
