@@ -56,7 +56,7 @@ function update_version {
 # Function to check whether provided string is a number or not
 function to_number {
     # Checks if provided parameter is a number or not. If not, then defaults to Zero.
-    echo "Provided value is $VALUE"
+    echo "Provided value is $1"
     local $VALUE=$1
     if [[ $VALUE =~ ^[0-9]+$ ]];
     then
@@ -93,7 +93,7 @@ if [ -z "$NEEDS_TAG" ]; then
     git tag "$NEW_VERSION"
     echo "Tagged with $NEW_VERSION (Ignoring fatal:cannot describe - this means commit is untagged) "
     set -e
-    git push origin $NEW_VERSION
+    git push origin $NEW_VERSION --verbose
     echo "Success"
 else
     echo "Already a tag on this commit"
