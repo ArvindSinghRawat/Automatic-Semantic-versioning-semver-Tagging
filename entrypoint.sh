@@ -35,22 +35,19 @@ function update_version {
 
         if [ $IS_MAJOR_CHANGE -gt 0 ]; 
         then
-            echo "Bumping major version by 1"
             V_MAJOR=$((V_MAJOR+1))
             V_MINOR=0
             V_PATCH=0
         elif [ $IS_MINOR_CHANGE -gt 0 ];
         then
-            echo "Bumping minor version by 1"
             V_MINOR=$((V_MINOR+1))
             V_PATCH=0
         else
-            echo "Bumping patch version by 1"
             V_PATCH=$((V_PATCH+1))
         fi
         NEXT_VERSION="$V_MAJOR.$V_MINOR.$V_PATCH"
     fi
-    return "$NEXT_VERSION"
+    echo "$NEXT_VERSION"
 }
 
 # Function to check whether provided string is a number or not
@@ -85,8 +82,7 @@ if [ -z "$NEEDS_TAG" ]; then
     echo "Current Version: $VERSION"
 
     # Create a new version from the existing tag
-    update_version VERSION
-    NEW_VERSION=$?
+    NEW_VERSION=$(update_version $VERSION)
     echo "Latest version tag: $NEW_VERSION"
 
     git tag "$NEW_VERSION"
