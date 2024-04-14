@@ -47,12 +47,13 @@ function update_version {
         fi
         NEXT_VERSION="$V_MAJOR.$V_MINOR.$V_PATCH"
     fi
-    echo "$NEXT_VERSION"
+    return "$NEXT_VERSION"
 }
 
 # Function to check whether provided string is a number or not
 function to_number {
     # Checks if provided parameter is a number or not. If not, then defaults to Zero.
+    echo "Provided value is $VALUE"
     local $VALUE=$1
     if [[ $VALUE =~ ^[0-9]+$ ]];
     then
@@ -81,7 +82,8 @@ if [ -z "$NEEDS_TAG" ]; then
     echo "Current Version: $VERSION"
 
     # Create a new version from the existing tag
-    NEW_VERSION=$(update_version VERSION)
+    update_version VERSION
+    NEW_VERSION=$?
     echo "Latest version tag: $NEW_VERSION"
 
     git tag "$NEW_VERSION"
