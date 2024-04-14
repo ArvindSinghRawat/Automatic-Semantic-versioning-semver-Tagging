@@ -44,7 +44,7 @@ function update_version {
             V_PATCH=$((V_PATCH+1))
         fi
         NEXT_VERSION="$V_MAJOR.$V_MINOR.$V_PATCH"
-ō
+
         echo "$NEXT_VERSION"
 
 }

@@ -1,6 +1,6 @@
 # action.yml
 name: 'Git Automatic Semver Tagging'
-description: 'Automatically creates tags based on Semantic versioning. The version number is automatically generated from commit messages. For more information, visit [Docs](https://github.com/ArvindSinghRawat/Git-Automatic-Semver-Tagging)'
+description: 'Automatically creates tags based on Semantic versioning. The version number is automatically generated from commit messages. For more information, visit [Docs](https://github.com/ArvindSinghRawat/Automatic-Semantic-versioning-semver-Tagging)'
 author: 'ArvindSinghRawat'
 branding:
   icon: 'git-merge'  
