@@ -9,7 +9,7 @@ function get_current_version {
     then
         VERSION='0.0.0'
     fi
-    return $VERSION
+    return "$VERSION"
 }
 
 # Function to update the version based on commit message
