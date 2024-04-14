@@ -1,6 +1,6 @@
 #!/bin/bash
 
-$NEW_VERSION=''
+NEW_VERSION=''
 
 # Function to get the current version based on the latest tag
 function get_current_version {
