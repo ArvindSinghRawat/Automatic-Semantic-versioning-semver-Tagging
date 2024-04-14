@@ -21,13 +21,19 @@ on:
   push:
     branches: [ main ]
 
+permissions:
+  contents: write
+
 jobs:
   auto-tag:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
       with:
-        fetch-depth: '0'
+        fetch-depth: 0
+        fetch-tags: true
+        set-safe-directory: true
+        
     - uses: ArvindSinghRawat/Automatic-Semantic-versioning-semver-Tagging@main
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
