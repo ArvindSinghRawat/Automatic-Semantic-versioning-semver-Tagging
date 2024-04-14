@@ -1,5 +1,7 @@
 #!/bin/bash
 
+$NEW_VERSION=''
+
 # Function to get the current version based on the latest tag
 function get_current_version {
     # Get the latest tag across all branches, not just the current branch
@@ -47,7 +49,7 @@ function update_version {
         fi
         NEXT_VERSION="$V_MAJOR.$V_MINOR.$V_PATCH"
     fi
-    echo "$NEXT_VERSION"
+    NEW_VERSION="$NEXT_VERSION"
 }
 
 # Function to check whether provided string is a number or not
@@ -82,8 +84,14 @@ if [ -z "$NEEDS_TAG" ]; then
     echo "Current Version: $VERSION"
 
     # Create a new version from the existing tag
-    NEW_VERSION=$(update_version $VERSION)
-    echo "Latest version tag: $NEW_VERSION"
+    update_version $VERSION
+    echo "Latest version tag is: $NEW_VERSION"
+
+    if [[ $NEW_VERSION == '' ]];
+    then
+        echo "Tag is not yet set" >&2
+        exit 1
+    fi
 
     git tag "$NEW_VERSION"
     echo "Tagged with $NEW_VERSION (Ignoring fatal:cannot describe - this means commit is untagged) "
