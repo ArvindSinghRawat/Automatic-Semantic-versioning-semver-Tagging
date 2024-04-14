@@ -67,7 +67,7 @@ function to_number {
 
 echo "Starting the tagging process based on commit message +semver: xxxxx"
 
-git config --global --add safe.directory '${GITHUB_WORKSPACE}/${source}'
+git config --global --add safe.directory '*'
 
 cd ${GITHUB_WORKSPACE}/${source}
 
