@@ -9,7 +9,7 @@ function get_current_version {
     then
         VERSION='0.0.0'
     fi
-    return "$VERSION"
+    echo "$VERSION"
 }
 
 # Function to update the version based on commit message
@@ -81,8 +81,7 @@ NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
 if [ -z "$NEEDS_TAG" ]; then
     # Get the latest tag across all branches, not just the current branch
     # Ignore in case of error, generally happens if no tag is present
-    get_current_version
-    VERSION=$?
+    VERSION=$(get_current_version)
     echo "Current Version: $VERSION"
 
     # Create a new version from the existing tag
