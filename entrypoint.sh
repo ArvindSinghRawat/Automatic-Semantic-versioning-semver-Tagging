@@ -78,11 +78,11 @@ NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
 if [ -z "$NEEDS_TAG" ]; then
     # Get the latest tag across all branches, not just the current branch
     # Ignore in case of error, generally happens if no tag is present
-    local VERSION=$(get_current_version)
+    VERSION=$(get_current_version)
     echo "Current Version: $VERSION"
 
     # Create a new version from the existing tag
-    local NEW_VERSION=$(update_version VERSION)
+    NEW_VERSION=$(update_version VERSION)
     echo "Latest version tag: $NEW_VERSION"
 
     git tag "$NEW_VERSION"
