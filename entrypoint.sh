@@ -67,6 +67,8 @@ function to_number {
 
 echo "Starting the tagging process based on commit message +semver: xxxxx"
 
+git config --global --add safe.directory '${GITHUB_WORKSPACE}/${source}'
+
 cd ${GITHUB_WORKSPACE}/${source}
 
 # Get current hash and see if it already has a tag
