@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Function to get the current version based on the latest tag
 function get_current_version {
     # Get the latest tag across all branches, not just the current branch
     local VERSION=`git describe --abbrev=0 --tags 2>/dev/null`
@@ -11,12 +12,13 @@ function get_current_version {
     echo "$VERSION"
 }
 
+# Function to update the version based on commit message
 function update_version {
-    # Updates the provided version to next version based on commit message
-    # Takes the current version in Semantic versioning format, for eg: 0.0.1 (without any prefix or suffix)
+    # Updates the provided version to the next version based on the commit message
+    # Takes the current version in Semantic versioning format, for example: 0.0.1 (without any prefix or suffix)
     local CURRENT_VERSION=$1
     local NEXT_VERSION=''
-    if [[$CURRENT_VERSION == '']]
+    if [[ $CURRENT_VERSION == '' ]]
     then
         NEXT_VERSION='0.0.1'
     else
@@ -46,9 +48,10 @@ function update_version {
         NEXT_VERSION="$V_MAJOR.$V_MINOR.$V_PATCH"
 
         echo "$NEXT_VERSION"
-
+    fi
 }
 
+# Function to check whether provided string is a number or not
 function to_number {
     # Checks if provided parameter is a number or not. If not, then defaults to Zero.
     local $VALUE="$1"
@@ -60,7 +63,7 @@ function to_number {
     fi
 }
 
-echo "Starting the taging process based on commit message +semver: xxxxx"
+echo "Starting the tagging process based on commit message +semver: xxxxx"
 
 git config --global --add safe.directory '*'
 
@@ -71,19 +74,19 @@ GIT_COMMIT=`git rev-parse HEAD`
 NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
 
 
-# Only tag if commit message have version-bump-message as mentioned above
+# Only tag if the commit message has the version-bump-message as mentioned in docs
 if [ -z "$NEEDS_TAG" ]; then
-    # Get latest tag across all branches, not just the current branch
+    # Get the latest tag across all branches, not just the current branch
     # Ignore in case of error, generally happens if no tag is present
     local VERSION=$(get_current_version)
     echo "Current Version: $VERSION"
 
-    # Create a new version from existing tag
+    # Create a new version from the existing tag
     local NEW_VERSION=$(update_version VERSION)
     echo "Latest version tag: $NEW_VERSION"
 
-    echo "Tagged with $NEW_VERSION (Ignoring fatal:cannot describe - this means commit is untagged) "
     git tag "$NEW_VERSION"
+    echo "Tagged with $NEW_VERSION (Ignoring fatal:cannot describe - this means commit is untagged) "
     set -e
     git push origin $NEW_VERSION
     echo "Success"
