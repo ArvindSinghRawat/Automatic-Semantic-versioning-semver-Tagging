@@ -1,6 +1,7 @@
 # Container image that runs your code
 FROM alpine/git
 
+# Installs and updates necessary dependencies
 RUN apk update && apk add bash git
 
 # Copies your code file from your action repository to the filesystem path `/` of the container
