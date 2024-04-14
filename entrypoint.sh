@@ -46,20 +46,19 @@ function update_version {
             V_PATCH=$((V_PATCH+1))
         fi
         NEXT_VERSION="$V_MAJOR.$V_MINOR.$V_PATCH"
-
-        echo "$NEXT_VERSION"
     fi
+    echo "$NEXT_VERSION"
 }
 
 # Function to check whether provided string is a number or not
 function to_number {
     # Checks if provided parameter is a number or not. If not, then defaults to Zero.
-    local $VALUE="$1"
+    local $VALUE=$1
     if [[ $VALUE =~ ^[0-9]+$ ]];
     then
-        echo "$VALUE"
+        echo $VALUE
     else
-        echo "0"
+        echo 0
     fi
 }
 
